@@ -1,5 +1,6 @@
 import unittest
 from client3 import getDataPoint
+from client3 import getRatio
 
 class ClientTest(unittest.TestCase):
   def test_getDataPoint_calculatePrice(self):
@@ -38,6 +39,27 @@ class ClientTest(unittest.TestCase):
   """ ------------ Add more unit tests ------------ """
 
 
+  def test_getRatio_calculateRatio(self):
+    prices = [
+      {'price_a': 1, 'price_b': 1},
+      {'price_a': 3, 'price_b': 4},
+      {'price_a': 10, 'price_b': 2}
+    ]
+    """ We testing for normal calculations, if the numbers the same, if A is smaller, and if B is smaller"""
+    prices_results = []
+    expected_p_results = [1.0, 0.75, 5.0]
+    for i in prices:
+        prices_results.append(getRatio(i['price_a'], i['price_b']))
+
+    self.assertEqual(prices_results, expected_p_results)
+
+
+  def test_getRatio_calculateRatio(self):
+    price_a = 1
+    price_b = 0
+
+    """ We are now testing for the one special case, which is when the price b is 0 there should be nothing returned"""
+    self.assertIsNone(getRatio(price_a, price_b))
 
 if __name__ == '__main__':
     unittest.main()
